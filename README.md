@@ -1,6 +1,24 @@
 # StateMachineSetters
 
-TODO: Write a gem description
+Adds setters for state machine events to trigger state transitions by setting attributes.
+
+## Usage
+
+    class ExampleModel < ActiveRecord::Base
+      state_machine :state do
+        event :pay do
+          transition :unpaid => :paid
+        end
+      end
+
+      state_machine_setter :state
+    end
+
+    @example = ExampleModel.new
+    @example.pay = true # triggers @example.pay
+
+    # params[:example] == {:pay => {:purchased_by_id => 10, :purchase_amount => 50}}
+    @example.update_attributes(params[:example]) # will set the attributes with the hash then call `pay`
 
 ## Installation
 
